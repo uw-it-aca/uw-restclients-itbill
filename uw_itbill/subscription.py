@@ -28,19 +28,12 @@ class Subscription(ITBill):
             subscriptions = []
             for sub in json_data:
                 sub_json = sub.get('subscription')
-                self.dump_json(sub_json)
                 subscriptions.append(SubscriptionModel(data=sub_json))
 
             return subscriptions
 
         sub_json = json_data.get('subscription')
-        self.dump_json(sub_json)
         return SubscriptionModel(data=sub_json)
-
-    def dump_json(self, json_data):
-        import json
-        with open('/tmp/original.json', 'a') as f:
-            print(json.dump(json_data, f, indent=2))
 
     def get_subscriptions_by_worktags(self, worktags):
         url = self.url(f"worktags?worktags={','.join(worktags)}")
