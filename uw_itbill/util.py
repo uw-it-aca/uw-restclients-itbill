@@ -3,10 +3,6 @@
 
 from datetime import datetime, timedelta
 from dateutil.parser import parse
-from restclients_core.util.decorators import use_mock
-from uw_itbill.dao import ITBill_DAO
-
-fdao_itbill_override = use_mock(ITBill_DAO())
 
 
 def str_to_datetime(s):

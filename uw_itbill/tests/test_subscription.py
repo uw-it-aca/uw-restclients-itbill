@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from unittest import TestCase
-from uw_itbill.util import fdao_itbill_override
+from uw_itbill.tests import fdao_itbill_override
 from uw_itbill.subscription import Subscription
 
 
