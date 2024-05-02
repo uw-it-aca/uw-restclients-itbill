@@ -4,7 +4,7 @@
 """
 Contains ITBill API DAO implementations.
 """
-from restclients_core.dao import DAO
+from restclients_core.dao import DAO, MockDAO
 from os.path import abspath, dirname
 import os
 
@@ -24,12 +24,13 @@ class  ITBill_DAO(DAO):
     def _edit_mock_response(self, method, url, headers, body, response):
         if "POST" == method or "PUT" == method:
             if response.status != 400:
-                path = "{path}/resources/itbill/file{url}.{method}".format(
-                    path=abspath(dirname(__file__)), url=url, method=method)
-
-                try:
-                    handle = open(path)
-                    response.data = handle.read()
-                    response.status = 200
-                except IOError:
-                    response.status = 404
+                for base_path in self.get_implementation()._get_mock_paths():
+                    path = "{base_path}/itbill/file{url}.{method}".format(
+                        base_path=base_path, url=url, method=method)
+                    try:
+                        with open(path, 'r') as handle:
+                            response.data = handle.read()
+                            response.status = 200
+                        return
+                    except IOError:
+                        response.status = 404

@@ -35,4 +35,4 @@ class Provision(ITBill):
 
         json_data = self.put_resource(url, data)
 
-        return Provision.from_json(json_data)
+        return ProvisionModel(data=json_data)

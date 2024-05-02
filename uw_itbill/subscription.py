@@ -43,7 +43,7 @@ class Subscription(ITBill):
 
         subscriptions = []
         for sub in self.get_resource(url):
-            json_data = Subscription.from_json(sub)
+            json_data = SubscriptionModel(data=sub)
             subscriptions.append(json_data)
 
         return subscriptions
@@ -53,4 +53,4 @@ class Subscription(ITBill):
 
         json_data = self.post_resource(url, subscription)
 
-        return Subscription.from_json(json_data)
+        return SubscriptionModel(data=json_data)
