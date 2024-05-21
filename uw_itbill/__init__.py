@@ -33,7 +33,7 @@ class ITBill(object):
             'Accept': 'application/json',
         }, body)
 
-        if response.status != 200:
+        if response.status not in [200, 201]:
             raise DataFailureException(url, response.status, response.data)
 
         return json.loads(response.data)
