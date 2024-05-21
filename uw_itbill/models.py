@@ -68,27 +68,30 @@ class Subscription(models.Model):
             self.provisions.append(
                 Provision(data=provision.get('provision', {})))
 
-    def to_json(self):
+    def json_data(self):
         return {
-            'sys_id': self.sys_id,
-            'url': self.url,
-            'key_remote': self.key_remote,
-            'name': self.name,
-            'lifecycle_state': self.lifecycle_state,
-            'product': self.product.to_json(),
-            'note': self.note,
-            'work_notes': self.work_notes,
-            'contact_number': self.contact_number.to_json(),
-            'contacts_additional': [
-                c.to_json() for c in self.contacts_additional],
-            'budgets': [
-                b.to_json() for b in self.budgets],
-            'provisions': [
-                p.to_json() for p in self.provisions],
-            'configuration_item': self.configuration_item.to_json(),
-            'start_date': date_to_str(self.start_date),
-            'end_date': date_to_str(self.end_date)
+            "sys_id": self.sys_id,
+            "url": self.url,
+            "key_remote": self.key_remote,
+            "name": self.name,
+            "lifecycle_state": self.lifecycle_state,
+            "product": self.product.json_data(),
+            "note": self.note,
+            "work_notes": self.work_notes,
+            "contact_number": self.contact_number.json_data(),
+            "contacts_additional": [
+                c.json_data() for c in self.contacts_additional],
+            "budgets": [
+                b.json_data() for b in self.budgets],
+            "provisions": [
+                p.json_data() for p in self.provisions],
+            "configuration_item": self.configuration_item.json_data(),
+            "start_date": date_to_str(self.start_date),
+            "end_date": date_to_str(self.end_date)
         }
+
+    def __str__(self):
+        return json.dumps(self.json_data())
 
 
 class Product(models.Model):
@@ -102,12 +105,15 @@ class Product(models.Model):
         self.sys_id = data.get('sys_id')
         self.url = data.get('url')
 
-    def to_json(self):
+    def json_data(self):
         return {
-            'name': self.name,
-            'sys_id': self.sys_id,
-            'url': self.url
+            "name": self.name,
+            "sys_id": self.sys_id,
+            "url": self.url
         }
+
+    def __str__(self):
+        return json.dumps(self.json_data())
 
 
 class Budget(models.Model):
@@ -190,7 +196,7 @@ class Budget(models.Model):
         self.last_bill_end_period = data.get('last_bill_end_period')
         self.stage = data.get('stage')
 
-    def to_json(self):
+    def json_data(self):
         return {
             "sys_id": self.sys_id,
             "url": self.url,
@@ -284,26 +290,29 @@ class Provision(models.Model):
         for budget in data.get('budgets', []):
             self.budgets.append(Budget(data=budget))
 
-    def to_json(self):
+    def json_data(self):
         return {
-            'sys_id': self.sys_id,
-            'name': self.name,
-            'bill_schedule': self.bill_schedule,
-            'start_date': date_to_str(self.start_date),
-            'end_date': date_to_str(self.end_date),
-            'last_bill_end_period': date_to_str(self.last_bill_end_period),
-            'next_bill_start': date_to_str(self.next_bill_start),
-            'stage': self.stage,
-            'note': self.note,
-            'key_remote': self.key_remote,
-            'current_quantity': self.current_quantity,
-            'product': self.product.to_json(),
-            'subscription': self.subscription.to_json(),
-            'quantities': [
-                q.to_json() for q in self.quantities],
-            'budgets': [
-                b.to_json() for b in self.budgets],
+            "sys_id": self.sys_id,
+            "name": self.name,
+            "bill_schedule": self.bill_schedule,
+            "start_date": date_to_str(self.start_date),
+            "end_date": date_to_str(self.end_date),
+            "last_bill_end_period": date_to_str(self.last_bill_end_period),
+            "next_bill_start": date_to_str(self.next_bill_start),
+            "stage": self.stage,
+            "note": self.note,
+            "key_remote": self.key_remote,
+            "current_quantity": self.current_quantity,
+            "product": self.product.json_data(),
+            "subscription": self.subscription.json_data(),
+            "quantities": [
+                q.json_data() for q in self.quantities],
+            "budgets": [
+                b.json_data() for b in self.budgets],
         }
+
+    def __str__(self):
+        return json.dumps(self.json_data())
 
 
 class Quantity(models.Model):
@@ -333,18 +342,22 @@ class Quantity(models.Model):
         self.quantity = float(data.get('quantity', 0))
         self.bill_comment = data.get('bill_comment')
 
-    def to_json(self):
+    def json_data(self):
         return {
-            'sys_id': self.sys_id,
-            'url': self.url,
-            'start_date': date_to_str(self.start_date),
-            'end_date': date_to_str(self.end_date),
-            'last_bill_end_period': date_to_str(self.last_bill_end_period),
-            'next_bill_start': date_to_str(self.next_bill_start),
-            'stage': self.stage,
-            'quantity': self.quantity,
-            'bill_comment': self.bill_comment,
+            "sys_id": self.sys_id,
+            "url": self.url,
+            "start_date": date_to_str(self.start_date),
+            "end_date": date_to_str(self.end_date),
+            "last_bill_end_period": date_to_str(self.last_bill_end_period),
+            "next_bill_start": date_to_str(self.next_bill_start),
+            "stage": self.stage,
+            "quantity": self.quantity,
+            "bill_comment": self.bill_comment,
         }
+
+    def __str__(self):
+        return json.dumps(self.json_data())
+
 
 class ConfigurationItem(models.Model):
     name = models.CharField(max_length=255)
@@ -357,12 +370,15 @@ class ConfigurationItem(models.Model):
         self.sys_id = data.get('sys_id')
         self.url = data.get('url')
 
-    def to_json(self):
+    def json_data(self):
         return {
-            'name': self.name,
-            'sys_id': self.sys_id,
-            'url': self.url
+            "name": self.name,
+            "sys_id": self.sys_id,
+            "url": self.url
         }
+
+    def __str__(self):
+        return json.dumps(self.json_data())
 
 
 class Contact(models.Model):
@@ -372,10 +388,10 @@ class Contact(models.Model):
         data = kwargs.get('data')
         self.number = data.get('number')
 
-    def to_json(self):
+    def json_data(self):
         return {
-            'number': self.number
+            "number": self.number
         }
 
     def __str__(self):
-        return json.dumps(self.number)
+        return json.dumps(self.json_data())
