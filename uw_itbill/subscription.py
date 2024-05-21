@@ -49,7 +49,7 @@ class Subscription(ITBill):
         return subscriptions
 
     def create_subscription(self, subscription):
-        url = self.url()
+        url = self.url().rstrip('/')
 
         json_data = self.post_resource(url, subscription)
 
