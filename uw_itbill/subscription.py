@@ -54,3 +54,10 @@ class Subscription(ITBill):
         json_data = self.post_resource(url, subscription)
 
         return SubscriptionModel(data=json_data)
+
+    def update_subscription_by_key_remote(self, key_remote, subscription):
+        url = self.url(f"key_remote/{key_remote}")
+
+        json_data = self.put_resource(url, subscription)
+
+        return SubscriptionModel(data=json_data)
