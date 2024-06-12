@@ -9,7 +9,7 @@ from os.path import abspath, dirname
 import os
 
 
-class  ITBill_DAO(DAO):
+class ITBill_DAO(DAO):
     def service_name(self):
         return "itbill"
 

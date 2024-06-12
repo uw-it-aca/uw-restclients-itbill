@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from restclients_core.exceptions import DataFailureException
-from uw_itbill.dao import  ITBill_DAO
+from uw_itbill.dao import ITBill_DAO
 import json
 
 
