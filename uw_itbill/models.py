@@ -261,13 +261,12 @@ class Provision(models.Model):
     key_remote = models.CharField(max_length=127, null=True)
     current_quantity = models.SmallIntegerField(default=0)
 
-
     def __init__(self, *args, **kwargs):
         self.product = {}
         self.subscription = {}
         self.quantities = []
         self.budgets = []
-        
+
         data = kwargs.get("data")
         self.sys_id = data.get('sys_id')
         self.name = data.get('name')
