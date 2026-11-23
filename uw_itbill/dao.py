@@ -4,9 +4,10 @@
 """
 Contains ITBill API DAO implementations.
 """
-from restclients_core.dao import DAO, MockDAO
-from os.path import abspath, dirname
 import os
+from os.path import abspath, dirname
+
+from restclients_core.dao import DAO
 
 
 class ITBill_DAO(DAO):
@@ -19,18 +20,16 @@ class ITBill_DAO(DAO):
     def _custom_headers(self, method, url, headers, body):
         basic_auth = self.get_service_setting('BASIC_AUTH')
         if basic_auth is not None:
-            return {"Authorization": "Basic {}".format(basic_auth)}
+            return {"Authorization": f"Basic {basic_auth}"}
 
     def _edit_mock_response(self, method, url, headers, body, response):
-        if "POST" == method or "PUT" == method:
-            if response.status != 400:
-                for base_path in self.get_implementation()._get_mock_paths():
-                    path = "{base_path}/itbill/file{url}.{method}".format(
-                        base_path=base_path, url=url, method=method)
-                    try:
-                        with open(path, 'r') as handle:
-                            response.data = handle.read()
-                            response.status = 200
-                        return
-                    except IOError:
-                        response.status = 404
+        if method in ["POST", "PUT"] and response.status != 400:
+            for base_path in self.get_implementation()._get_mock_paths():
+                path = f"{base_path}/itbill/file{url}.{method}"
+                try:
+                    with open(path, 'r') as handle:
+                        response.data = handle.read()
+                        response.status = 200
+                    return
+                except OSError:
+                    response.status = 404
