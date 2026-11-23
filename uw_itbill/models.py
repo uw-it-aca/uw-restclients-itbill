@@ -50,14 +50,16 @@ class Subscription(models.Model):
         self.note = data.get('note')
         self.work_notes = data.get('work_notes')
 
-        self.product = Product(data=data.get('product', {}))
+        self.product = Product(
+            data=data.get('product', {}) or {})
 
-        self.contact_number = Contact(data=data.get('contact_number', {}))
+        self.contact_number = Contact(
+            data=data.get('contact_number', {}) or {})
         for contact in data.get('contacts_additional', []):
             self.contacts_additional.append(contact)
 
         self.configuration_item = ConfigurationItem(
-            data=data.get('configuration_item', {}))
+            data=data.get('configuration_item', {}) or {})
 
         self.start_date = str_to_date(data.get('start_date'))
         self.end_date = str_to_date(data.get('end_date'))
