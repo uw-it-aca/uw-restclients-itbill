@@ -1,12 +1,14 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from restclients_core.exceptions import DataFailureException
-from uw_itbill.dao import ITBill_DAO
 import json
 
+from restclients_core.exceptions import DataFailureException
 
-class ITBill(object):
+from uw_itbill.dao import ITBill_DAO
+
+
+class ITBill:
     """
     The ITBill object has methods for getting information
     about accounts, courses, enrollments and users within
