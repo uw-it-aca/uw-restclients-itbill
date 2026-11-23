@@ -29,10 +29,3 @@ class Provision(ITBill):
             return provisions
 
         return ProvisionModel(data=json_data.get('provision'))
-
-    def put_provision_by_remote_key(self, key_remote, provision):
-        url = self.url("key_remote/{key_remote}")
-
-        json_data = self.put_resource(url, data)
-
-        return ProvisionModel(data=json_data)

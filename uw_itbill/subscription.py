@@ -1,9 +1,6 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-# Copyright 2021 UW-IT, University of Washingtonp
-# SPDX-License-Identifier: Apache-2.0
-
 from uw_itbill import ITBill
 from uw_itbill.models import Subscription as SubscriptionModel
 

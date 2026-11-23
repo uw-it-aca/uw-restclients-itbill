@@ -1,9 +1,11 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from restclients_core import models
-from uw_itbill.util import str_to_date, date_to_str, date_to_month
 import json
+
+from restclients_core import models
+
+from uw_itbill.util import date_to_month, date_to_str, str_to_date
 
 
 class Subscription(models.Model):
@@ -50,14 +52,16 @@ class Subscription(models.Model):
         self.note = data.get('note')
         self.work_notes = data.get('work_notes')
 
-        self.product = Product(data=data.get('product', {}))
+        self.product = Product(
+            data=data.get('product', {}) or {})
 
-        self.contact_number = Contact(data=data.get('contact_number', {}))
+        self.contact_number = Contact(
+            data=data.get('contact_number', {}) or {})
         for contact in data.get('contacts_additional', []):
             self.contacts_additional.append(contact)
 
         self.configuration_item = ConfigurationItem(
-            data=data.get('configuration_item', {}))
+            data=data.get('configuration_item', {}) or {})
 
         self.start_date = str_to_date(data.get('start_date'))
         self.end_date = str_to_date(data.get('end_date'))
